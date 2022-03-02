@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-series",
+  "version": "1.0.0",
+  "description": "This repositories includes a series of NodeJs projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderpunktech/nodejs-series.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderpunktech/nodejs-series/issues"
+  },
+  "homepage": "https://github.com/coderpunktech/nodejs-series#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
