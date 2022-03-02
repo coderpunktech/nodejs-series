@@ -43,4 +43,25 @@ export default class List<T> {
     get(index: number): T {
         return this.items[index];
     }
+
+    /**
+     * Get all the values in the list as an array
+     * 
+     * @returns the values of the list as array
+     */
+    values(): Array<T> {
+        return this.items;
+    }
+
+    /**
+     * Build a new List containing the elements passed as argument
+     * 
+     * @param elements the elements from the array to build the list with
+     * @returns a List containing the elements
+     */
+    public static of<T>(...elements: Array<T>): List<T> {
+        const list: List<T> = new List();
+        elements.forEach((el) => list.add(el));
+        return list;
+    }
 }

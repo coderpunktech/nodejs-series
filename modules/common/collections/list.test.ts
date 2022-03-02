@@ -40,3 +40,20 @@ test('it should allow to remove an element from a list', () => {
 
     expect(numbers.size()).toBe(1);
 });
+
+test('it should allow to build a list with elements', () => {
+    let numbers: List<number> = List.of(15, 23, 13, 44);
+
+    expect(numbers.size()).toBe(4);
+});
+
+test('it should allow to return the values of the list as array', () => {
+    let numbers: List<number> = List.of(15, 23, 13, 44);
+
+    expect(numbers.size()).toBe(4);
+
+    let numbersArray: Array<number> = numbers.values();
+
+    expect(numbersArray).toBeDefined();
+    expect(numbersArray.length).toBe(4);
+});
