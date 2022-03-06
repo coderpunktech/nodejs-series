@@ -1,3 +1,5 @@
+import List from '../common/collections/list';
+import Edge from './edge';
 import Graph from './graph';
 import Node from './node';
 let graph: Graph;
@@ -9,21 +11,26 @@ beforeEach(() => {
 test('it should allow to add a node', () => {
     const A: Node = new Node('A');
 
-    expect(graph.adjacencyList.size).toBe(0);
+    expect(graph.getAdjacencyList().size).toBe(0);
     graph.addNode(A);
-    expect(graph.adjacencyList.size).toBe(1);
+    expect(graph.getAdjacencyList().size).toBe(1);
 });
 
 test('it should allow to add edges', () => {
     const A: Node = new Node('A');
     const B: Node = new Node('B');
 
-    expect(graph.adjacencyList.size).toBe(0);
+    expect(graph.getAdjacencyList().size).toBe(0);
     graph.addNode(A);
     graph.addNode(B);
-    expect(graph.adjacencyList.size).toBe(2);
+    expect(graph.getAdjacencyList().size).toBe(2);
     graph.addEdge(A, B, 2);
-    // expect(graph.adjacencyList.get(A).size).toBe(1);
+    const aEdges: List<Edge> | undefined = graph.getAdjacencyList().get(A);
+    expect(aEdges).toBeDefined();
+    // find a better workaround
+    if (aEdges !== undefined) {
+        expect(aEdges.size()).toBe(1);
+    }
 });
 
 test('it should find the shortest path', () => {
@@ -49,6 +56,4 @@ test('it should find the shortest path', () => {
     .addEdge(D, E, 3)
     .addEdge(E, F, 7)
     .addEdge(E, D, 3);
-
-
 });
