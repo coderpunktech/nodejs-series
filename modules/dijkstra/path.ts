@@ -1,11 +1,21 @@
-import Node from "./node";
-
+/**
+ * Represents a Path object with starting and ending nodes with distance
+ */
 export default class Path {
-    private from: Node;
-    private to: Node;
+    /**
+     * the starting node
+     */
+    private from: string;
+    /**
+     * the destination node
+     */
+    private to: string;
+    /**
+     * The path distance
+     */
     private distance: number;
 
-    constructor(from: Node, to: Node, distance?: number) {
+    constructor(from: string, to: string, distance?: number) {
         this.from = from;
         this.to = to;
         if (!distance) {
@@ -14,11 +24,11 @@ export default class Path {
         this.distance = distance;
     }
 
-    getFrom(): Node {
+    getFrom(): string {
         return this.from;
     }
 
-    getTo(): Node {
+    getTo(): string {
         return this.to;
     }
 

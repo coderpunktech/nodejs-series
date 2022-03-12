@@ -1,5 +1,3 @@
-import Node from "./node"
-
 /**
  * Representation of the an Edge in a Graph
  */
@@ -7,23 +5,35 @@ export default class Edge {
     /**
      * The edge distance
      */
-    distance: number
+    private distance: number
     /**
      * The starting node
      */
-    from: Node
+    private from: string
     /**
      * The end node
      */
-    to: Node
+    private to: string
 
-    constructor(distance: number, from: Node, to: Node) {
+    constructor(distance: number, from: string, to: string) {
         this.distance = distance;
         this.from = from;
         this.to = to;
     }
 
     toString(): string {
-        return `EDGE ${this.from} -> ${this.to} `
+        return `EDGE ${this.from} -> ${this.to}`;
+    }
+
+    getDistance(): number {
+        return this.distance;
+    }
+
+    getFrom(): string {
+        return this.from;
+    }
+
+    getTo(): string {
+        return this.to;
     }
 }

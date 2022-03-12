@@ -2,7 +2,6 @@ import List from "../common/collections/list";
 import Element from "../common/collections/queue/element";
 import PriorityQueue from "../common/collections/queue/priority.queue";
 import Edge from "./edge";
-import Node from "./node";
 import Path from "./path";
 
 /**
@@ -34,8 +33,8 @@ export default class Graph {
      * @param distance the distance between the nodes
      * @returns this
      */
-    addEdge(from: Node, to: Node, distance: number): Graph {
-        this.adjacencyList.get(from.getName())?.add(new Edge(distance, from, to));
+    addEdge(from: string, to: string, distance: number): Graph {
+        this.adjacencyList.get(from)?.add(new Edge(distance, from, to));
         return this;
     }
 
@@ -43,6 +42,13 @@ export default class Graph {
         return this.adjacencyList;
     }
 
+    /**
+     * Implements diijstra algorithm to find the shortest path for this Graph
+     * 
+     * @param start the starting node
+     * @param end the destination node
+     * @returns the shortest path represented in a {@link Path} object
+     */
     diijkstra(start: string, end: string): Path {
         // prepare the priority queue
         const pq: PriorityQueue<string> = new PriorityQueue();
@@ -75,15 +81,15 @@ export default class Graph {
                 .forEach((edge) => {
                     // calculate the distance cost from the starting node
                     // by adding the current node cost with the edge distance
-                    const cost: number = current.getPriority() + edge.distance;
+                    const cost: number = current.getPriority() + edge.getDistance();
                     // get the current cost for this node from the map
-                    const currentConst: number = map.get(edge.to.getName()) || Infinity;
+                    const currentConst: number = map.get(edge.getTo()) || Infinity;
                     if (cost < currentConst) {
                         // if the cost is less than the currentCost 
                         // then replace it in the map
-                        map.set(edge.to.getName(), cost);
+                        map.set(edge.getTo(), cost);
                         // enqueue the node to the priority list
-                        pq.enqueue(edge.to.getName(), cost);
+                        pq.enqueue(edge.getTo(), cost);
                     }
                 });
 
@@ -97,14 +103,14 @@ export default class Graph {
                 } else {
                     // the priority queue is empty and there are no unvisited nodes
                     // return the path
-                    return new Path(new Node(start), new Node(end), map.get(end))
+                    return new Path(start, end, map.get(end))
                 }
             } else {
                 // dequeue the priority queue when not empty to get the next current node to visit
                 current = pq.dequeue();
             }
         }
-
-        return new Path(new Node(start), new Node(end), map.get(end))
+        // done! return the path
+        return new Path(start, end, map.get(end))
     }
 }

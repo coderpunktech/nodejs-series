@@ -1,7 +1,6 @@
 import List from '../common/collections/list';
 import Edge from './edge';
 import Graph from './graph';
-import Node from './node';
 import Path from './path';
 let graph: Graph;
 
@@ -10,7 +9,7 @@ beforeEach(() => {
 });
 
 test('it should allow to add a node', () => {
-    const A: Node = new Node('A');
+    const A: string = 'A';
 
     expect(graph.getAdjacencyList().size).toBe(0);
     graph.addNode('A');
@@ -18,15 +17,15 @@ test('it should allow to add a node', () => {
 });
 
 test('it should allow to add edges', () => {
-    const A: Node = new Node('A');
-    const B: Node = new Node('B');
+    const A: string = 'A';
+    const B: string = 'B';
 
     expect(graph.getAdjacencyList().size).toBe(0);
     graph.addNode('A');
     graph.addNode('B');
     expect(graph.getAdjacencyList().size).toBe(2);
     graph.addEdge(A, B, 2);
-    const aEdges: List<Edge> | undefined = graph.getAdjacencyList().get(A.getName());
+    const aEdges: List<Edge> | undefined = graph.getAdjacencyList().get(A);
     expect(aEdges).toBeDefined();
     // find a better workaround
     if (aEdges !== undefined) {
@@ -35,12 +34,12 @@ test('it should allow to add edges', () => {
 });
 
 test('it should find the shortest path', () => {
-    const A: Node = new Node('A');
-    const B: Node = new Node('B');
-    const C: Node = new Node('C');
-    const D: Node = new Node('D');
-    const E: Node = new Node('E');
-    const F: Node = new Node('F');
+    const A: string = 'A';
+    const B: string = 'B';
+    const C: string = 'C';
+    const D: string = 'D';
+    const E: string = 'E';
+    const F: string = 'F';
 
     graph.addNode('A')
     .addNode('B')
@@ -58,12 +57,12 @@ test('it should find the shortest path', () => {
     .addEdge(E, F, 7)
     .addEdge(E, D, 3);
 
-    const A_C: Path = graph.diijkstra("A", "C"); // 7
+    const A_C: Path = graph.diijkstra(A, C); // 7
     expect(A_C.getDistance()).toBe(7);
 
-    const A_F: Path = graph.diijkstra("A", "F"); // 11
+    const A_F: Path = graph.diijkstra(A, F); // 11
     expect(A_F.getDistance()).toBe(11);
 
-    const A_E: Path = graph.diijkstra("A", "E"); // 6
+    const A_E: Path = graph.diijkstra(A, E); // 6
     expect(A_E.getDistance()).toBe(6);
 });
