@@ -1,4 +1,5 @@
 import List from "../common/collections/list";
+import Element from "../common/collections/queue/element";
 import PriorityQueue from "../common/collections/queue/priority.queue";
 import Edge from "./edge";
 import Node from "./node";
@@ -8,7 +9,7 @@ import Path from "./path";
  * Represent the Graph
  */
 export default class Graph {
-    private adjacencyList: Map<Node, List<Edge>>
+    private adjacencyList: Map<string, List<Edge>>
 
     constructor() {
         this.adjacencyList = new Map();
@@ -17,11 +18,11 @@ export default class Graph {
     /**
      * Add a node to the graph
      * 
-     * @param node the node to add to the graph
+     * @param string the node to add to the graph
      * @returns this
      */
-    addNode(node: Node): Graph {
-        this.adjacencyList.set(node, new List());
+    addNode(nodeName: string): Graph {
+        this.adjacencyList.set(nodeName, new List());
         return this;
     }
 
@@ -34,21 +35,76 @@ export default class Graph {
      * @returns this
      */
     addEdge(from: Node, to: Node, distance: number): Graph {
-        this.adjacencyList.get(from)?.add(new Edge(distance, from, to));
+        this.adjacencyList.get(from.getName())?.add(new Edge(distance, from, to));
         return this;
     }
 
-    getAdjacencyList(): Map<Node, List<Edge>> {
+    getAdjacencyList(): Map<string, List<Edge>> {
         return this.adjacencyList;
     }
 
     diijkstra(start: string, end: string): Path {
-        const pq: PriorityQueue<Node> = new PriorityQueue();
-        const from: Node = new Node(start);
-        const to: Node = new Node(end);
+        // prepare the priority queue
+        const pq: PriorityQueue<string> = new PriorityQueue();
+        // prepare map to store shortest path
+        const map: Map<string, number> = new Map();
+        const unvisitedNodes: List<string> = new List();
+        // get all the nodes from the adjacency list
+        const entries: IterableIterator<string> = this.adjacencyList.keys();
 
-        pq.enqueue(from, 0);
-        // TODO implement me
-        return new Path(new List());
+        let entry = entries.next();
+
+        while (entry.done === false) {
+            // set all the nodes as unvisited
+            unvisitedNodes.add(entry.value);
+            // set each node distance to infinity
+            map.set(entry.value, Infinity);
+            entry = entries.next();
+        }
+        // set the starting node distance to 0
+        map.set(start, 0);
+        let current: Element<string> = new Element(start, 0);
+
+        // keep looping until all the nodes have been visited
+        while(!unvisitedNodes.isEmpty()) {
+            // mark the current node as visited
+            unvisitedNodes.remove(current.getElement());
+            // visit all the edges
+            const edges: List<Edge> | undefined = this.adjacencyList.get(current.getElement());
+            edges?.values()
+                .forEach((edge) => {
+                    // calculate the distance cost from the starting node
+                    // by adding the current node cost with the edge distance
+                    const cost: number = current.getPriority() + edge.distance;
+                    // get the current cost for this node from the map
+                    const currentConst: number = map.get(edge.to.getName()) || Infinity;
+                    if (cost < currentConst) {
+                        // if the cost is less than the currentCost 
+                        // then replace it in the map
+                        map.set(edge.to.getName(), cost);
+                        // enqueue the node to the priority list
+                        pq.enqueue(edge.to.getName(), cost);
+                    }
+                });
+
+            if (pq.isEmpty()) {
+                if (!unvisitedNodes.isEmpty()) {
+                    // since the priority queue is empty check whether there are still unvisited nodes
+                    const unvisited = unvisitedNodes.get(unvisitedNodes.size() - 1);
+                    // if so get the next unvisited node with its current distance or infinity
+                    current = new Element(unvisited, map.get(unvisited) || Infinity);
+                    continue;
+                } else {
+                    // the priority queue is empty and there are no unvisited nodes
+                    // return the path
+                    return new Path(new Node(start), new Node(end), map.get(end))
+                }
+            } else {
+                // dequeue the priority queue when not empty to get the next current node to visit
+                current = pq.dequeue();
+            }
+        }
+
+        return new Path(new Node(start), new Node(end), map.get(end))
     }
 }

@@ -48,4 +48,8 @@ export default class PriorityQueue<T> {
 
         throw new Error("cannot get last from empty queue");
     }
+
+    clear(): void {
+        this.elements = [];
+    }
 }

@@ -1,10 +1,28 @@
-import List from "../common/collections/list";
-import Edge from "./edge";
+import Node from "./node";
 
 export default class Path {
-    edges: List<Edge>
+    private from: Node;
+    private to: Node;
+    private distance: number;
 
-    constructor(edges: List<Edge>) {
-        this.edges = edges;
+    constructor(from: Node, to: Node, distance?: number) {
+        this.from = from;
+        this.to = to;
+        if (!distance) {
+            throw new Error("distance is required");
+        }
+        this.distance = distance;
+    }
+
+    getFrom(): Node {
+        return this.from;
+    }
+
+    getTo(): Node {
+        return this.to;
+    }
+
+    getDistance(): number {
+        return this.distance;
     }
 }

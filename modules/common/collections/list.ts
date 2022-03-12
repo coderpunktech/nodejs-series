@@ -31,7 +31,7 @@ export default class List<T> {
      * @param item the item to remove from the list
      */
     remove(item: T): void {
-        this.items = this.items.filter((current) => current === item);
+        this.items = this.items.filter((current) => current !== item);
     }
 
     /**
@@ -51,6 +51,15 @@ export default class List<T> {
      */
     values(): Array<T> {
         return this.items;
+    }
+
+    /**
+     * Check whether the list is empty or not
+     * 
+     * @returns true when the list is empty, false otherwise
+     */
+    isEmpty(): boolean {
+        return this.size() === 0;
     }
 
     /**
