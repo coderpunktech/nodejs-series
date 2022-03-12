@@ -49,7 +49,7 @@ export default class Graph {
      * @param end the destination node
      * @returns the shortest path represented in a {@link Path} object
      */
-    diijkstra(start: string, end: string): Path {
+    dijkstra(start: string, end: string): Path {
         // prepare the priority queue
         const pq: PriorityQueue<string> = new PriorityQueue();
         // prepare map to store shortest path

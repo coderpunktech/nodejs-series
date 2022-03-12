@@ -57,12 +57,12 @@ test('it should find the shortest path', () => {
     .addEdge(E, F, 7)
     .addEdge(E, D, 3);
 
-    const A_C: Path = graph.diijkstra(A, C); // 7
+    const A_C: Path = graph.dijkstra(A, C); // 7
     expect(A_C.getDistance()).toBe(7);
 
-    const A_F: Path = graph.diijkstra(A, F); // 11
+    const A_F: Path = graph.dijkstra(A, F); // 11
     expect(A_F.getDistance()).toBe(11);
 
-    const A_E: Path = graph.diijkstra(A, E); // 6
+    const A_E: Path = graph.dijkstra(A, E); // 6
     expect(A_E.getDistance()).toBe(6);
 });

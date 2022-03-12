@@ -1,3 +1,6 @@
+/**
+ * The element to be used in a priority queue
+ */
 export default class Element<T> {
     private element: T
     private priority: number
