@@ -67,4 +67,8 @@ export default class PriorityQueue<T> {
     size(): number {
         return this.elements.length
     }
+
+    getElements() {
+        return this.elements
+    }
 }
