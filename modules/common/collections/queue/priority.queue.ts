@@ -41,6 +41,17 @@ export default class PriorityQueue<T> {
         throw new Error("cannot get first from empty queue");
     }
 
+    remove(t: T): Element<T> | null{
+        for (let i = 0; i < this.elements.length; i++) {
+            const pe = this.elements[i];
+            if (t === pe.getElement()) {
+                this.elements.splice(i, 1);
+                return pe;
+            }
+        }
+        return null
+    }
+
     getLast(): Element<T> {
         if (!this.isEmpty()) {
             return this.elements[this.elements.length - 1];
@@ -51,5 +62,9 @@ export default class PriorityQueue<T> {
 
     clear(): void {
         this.elements = [];
+    }
+
+    size(): number {
+        return this.elements.length
     }
 }
