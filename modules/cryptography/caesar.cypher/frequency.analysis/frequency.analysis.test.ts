@@ -1,5 +1,4 @@
 import Element from "../../../common/collections/queue/element";
-import PriorityQueue from "../../../common/collections/queue/priority.queue";
 import FrequencyAnalysis from "./frequency.analysis";
 import CaesarCypher from '../caesar.cypher';
 
