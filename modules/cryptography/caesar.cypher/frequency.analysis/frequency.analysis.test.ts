@@ -5,7 +5,7 @@ import CaesarCypher from '../caesar.cypher';
 describe('The Frequency Analysis', () => {
 
     test('it should run an analysis on character frequency', () => {
-        const text = 'This general text will be used for the purpose of analysing the character frequency in some text';
+        const text = 'This general text will be used for the purpose of analysing the character frequency in the English language';
 
         const textFrequency: Array<Element<string>> = FrequencyAnalysis.analyze(text);
 
